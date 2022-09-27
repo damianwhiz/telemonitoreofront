@@ -1,0 +1,13 @@
+.panelinfoclient{
+    display: flex;
+}
+.SignosVitales{
+    width: 50%;
+}
+.CardInfoUser{
+    width: 50%;
+}
+.SignosVitales ul{
+    display: flex;
+    flex-direction: column;
+}

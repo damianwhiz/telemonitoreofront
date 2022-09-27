@@ -1,41 +1,16 @@
 import react from "react";
+import styles from "./Login.module.css"
+import {Link} from "react-router-dom";
 import axios from 'axios';
-import { useState,useEffect } from 'react';
-import Cookies from 'universal-cookie';
+import { useState } from 'react';
 
 export default function Login(){
-      //coockie
-  const cookies=new Cookies()
-  //registro
-  const [registro,setRegistro]=useState({
-    username:"",
-    password:"",
-    name:""
-  })
-  const usernameHandler=(e)=>{
-    setRegistro({...registro,username:e.target.value})
-  }
-  const passwordHandler=(e)=>{
-    setRegistro({...registro,password:e.target.value})
-  }
-  const nameHandler=(e)=>{
-    setRegistro({...registro,name:e.target.value})
-  }
-  const sendRegistro=async(e)=>{
-    e.preventDefault()
-    console.log(registro)
-    await axios.post("http://localhost:4000/register",registro).then(e=>{console.log(e.data)})
-    setRegistro({
-      username:"",
-      password:"",
-      name:""
-    })
-  }
-  //login
+  
   const [login,setLogin]=useState({
     username:"",
     password:""
   })
+  const[respuesta,setRespuesta]=useState("")
   const usernameHandlerLogin=(e)=>{
     setLogin({...login,username:e.target.value})
   }
@@ -45,10 +20,15 @@ export default function Login(){
   const sendLogin=async(e)=>{
     e.preventDefault()
     await axios.post("http://localhost:4000/login",login).then(e=>{
-      var respuesta=e.data.rows[0];
-      cookies.set("id",respuesta.id,{path:"/"})
-      cookies.set("name",respuesta.name,{path:"/"})
+      if(e.data.token){
+        localStorage.setItem("token",e.data.token)
+      localStorage.setItem("id",e.data.payload.id)
+      localStorage.setItem("whatsapp",e.data.payload.whatsapp)
       window.location.href="/home"
+    }
+    else{
+      setRespuesta(e.data)
+    }
     
     })
     setLogin({
@@ -56,23 +36,26 @@ export default function Login(){
       password:""
     })
   }
-  //sesion
-  const [usuario,setUsuario]=useState("")
 
-  return <div className="login">
-    <form onSubmit={sendRegistro}>
-        <h1>Registrese por favor</h1>
-        <input type="text" placeholder="username" onChange={usernameHandler} value={registro.username}></input>
-        <input type="text" placeholder="password" onChange={passwordHandler} value={registro.password}></input>
-        <input type="text" placeholder="nombre" onChange={nameHandler} value={registro.name}></input>
-        <input type="submit"></input>
-      </form>
+
+  return <div className={styles.center}>
+    <div className="login">
+    <div className={styles.paleta}>
       <form onSubmit={sendLogin}>
-        <h1>Inicie sesion</h1>
-        <input type="text" placeholder="username" onChange={usernameHandlerLogin} value={login.username}></input>
-        <input type="text" placeholder="password" onChange={passwordHandlerLogin} value={login.password}></input>
-        <input type="submit"></input>
+        <h1>Iniciar sesion</h1>
+        <input type="text" placeholder="username" onChange={usernameHandlerLogin} value={login.username} className={styles.forminput}></input>
+        <input type="text" placeholder="password" onChange={passwordHandlerLogin} value={login.password} className={styles.forminput}></input>
+        <input type="submit" value="Iniciar sesion" className={styles.boton}></input>
       </form>
-      {usuario.length>1?<p>Bienvenido {usuario}</p>:<p>Por favor inicie sesion para continuar</p>}
+      {respuesta.length > 0 && <p>{respuesta}</p>}
+      </div>
+    
+    
+      <div className={styles.admin}>
+        <div className={styles.admintext}><p>O inicie sesion como administrador</p></div>
+        <div className={styles.botonadmin}><Link to="/login-admin">ADMIN</Link></div>
+    
+    </div>
+    </div>
   </div>
 }
