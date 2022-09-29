@@ -8,9 +8,10 @@ import { CgProfile } from 'react-icons/cg';
 import { BsPencilSquare } from 'react-icons/bs';
 import {Line} from "react-chartjs-2"
 import { Chart as ChartJS } from "chart.js/auto";
+
 export default function Home(){
     
-    
+  console.log(process.env.REACT_APP_WEBSITE_NAME)
 const whatsapp=localStorage.getItem('whatsapp')
 const token=localStorage.getItem('token')
 const id=localStorage.getItem('id')
@@ -19,10 +20,10 @@ const [show,setShow] = useState("principal");
 const [grafico,setGrafico] =useState(false);
 useEffect(()=>{
     async function fetchData() {
-        await axios.get(`http://localhost:4000/info-clients/${whatsapp}`).then(response => {
+        await axios.get(`${process.env.REACT_APP_URL_BACK}/info-clients/${whatsapp}`).then(response => {
             setData(response.data);
             console.log(response.data[1])
-        
+            console.log(process.env.REACT_APP_URL_BACK)
             let fechas=response.data[1].map(e=>{return e.date})
             let estados=response.data[1].map(e=>{return e.first_question})
             setGrafico({

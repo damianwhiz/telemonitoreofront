@@ -12,8 +12,8 @@ export default function LoginEnfermera(){
     const [nurses,setNurses] = useState([])
     
     useEffect(()=>{
-        axios.get("http://localhost:4000/doctors").then((e)=>{setDoctors(e.data)})
-        axios.get("http://localhost:4000/nurses").then((e)=>{setNurses(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/doctors`).then((e)=>{setDoctors(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/nurses`).then((e)=>{setNurses(e.data)})
         
     },[])
     const idDoctor=(e)=>{
@@ -68,7 +68,7 @@ export default function LoginEnfermera(){
       }
       const sendRegistroCliente=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/register",registroCliente).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/register`,registroCliente).then(e=>{
           swal("Guardado!", "Usuario creado exitosamente!", "success");
         })
         setRegistroCliente({
@@ -117,7 +117,7 @@ export default function LoginEnfermera(){
       const sendRegistroDoctor=async(e)=>{
         e.preventDefault()
         console.log(registroDoctor)
-        await axios.post("http://localhost:4000/register-doctor",registroDoctor).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/register-doctor`,registroDoctor).then(e=>{
           swal("Guardado!", "Usuario creado exitosamente!", "success");
         })
         setRegistroDoctor({
@@ -156,7 +156,7 @@ export default function LoginEnfermera(){
       }
       const sendRegistroEnfermero=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/register-nurse",registroEnfermero).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/register-nurse`,registroEnfermero).then(e=>{
           swal("Guardado!", "Usuario creado exitosamente!", "success");
         })
         setRegistroEnfermero({

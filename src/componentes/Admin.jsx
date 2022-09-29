@@ -30,7 +30,7 @@ export default function Admin(){
       let idIndicador=indicadorSelected[0].id
       console.log(idIndicador)
       e.preventDefault()
-      await axios.put(`http://localhost:4000/editindicador/${idIndicador}`,indicadoresEdit).then(e=>{alert(e.data)}).then(e=>{
+      await axios.put(`${process.env.REACT_APP_URL_BACK}/editindicador/${idIndicador}`,indicadoresEdit).then(e=>{alert(e.data)}).then(e=>{
         setIndicadoresEdit({
           min:"",
           max:"",
@@ -59,7 +59,7 @@ export default function Admin(){
     }
     const newIndicadorHandler=(e)=>{
       e.preventDefault()
-      axios.post(`http://localhost:4000/addindicador`,newIndicador).then((e)=>{alert(e.data)})
+      axios.post(`${process.env.REACT_APP_URL_BACK}/addindicador`,newIndicador).then((e)=>{alert(e.data)})
       setNewIndicador({
         name:"",
         max:"",
@@ -81,7 +81,7 @@ export default function Admin(){
     }
     const newSintomaHandler=(e)=>{
       e.preventDefault()
-      axios.post(`http://localhost:4000/addsintoma`,newSintoma).then((e)=>{alert(e.data)})
+      axios.post(`${process.env.REACT_APP_URL_BACK}/addsintoma`,newSintoma).then((e)=>{alert(e.data)})
       setNewSintoma({
         name:"",
         description:""
@@ -117,7 +117,7 @@ export default function Admin(){
     const sendUpdateClient=async(e)=>{
       let idCliente=edit[0].id
       e.preventDefault()
-      axios.put(`http://localhost:4000/all/${idCliente}`,sendEdit).then((e)=>{alert(e.data.response)})
+      axios.put(`${process.env.REACT_APP_URL_BACK}/all/${idCliente}`,sendEdit).then((e)=>{alert(e.data.response)})
       setSendEdit({
         mail:"",
       password:""
@@ -130,7 +130,7 @@ export default function Admin(){
       e.preventDefault()
       let idCliente=selectedUser[0].id
       console.log(idCliente)
-      axios.post(`http://localhost:4000/new-cuidador/${idCliente}`,formcuidador).then(e=>{alert(e.data)})
+      axios.post(`${process.env.REACT_APP_URL_BACK}/new-cuidador/${idCliente}`,formcuidador).then(e=>{alert(e.data)})
       setFormcuidador({
         name:"",
       lastname:"",
@@ -152,11 +152,11 @@ export default function Admin(){
       setFormcuidador({...formcuidador,mail:e.target.value})
     }
     useEffect(()=>{
-        axios.get("http://localhost:4000/doctors").then((e)=>{setDoctors(e.data)})
-        axios.get("http://localhost:4000/nurses").then((e)=>{setNurses(e.data)})
-        axios.get("http://localhost:4000/all").then((e)=>{setClients(e.data);setSearcher(e.data)})
-        axios.get("http://localhost:4000/getindicadores").then((e)=>{setIndicadores(e.data)})
-        axios.get("http://localhost:4000/getsintomas").then((e)=>{setSintomas(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/doctors`).then((e)=>{setDoctors(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/nurses`).then((e)=>{setNurses(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/all`).then((e)=>{setClients(e.data);setSearcher(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/getindicadores`).then((e)=>{setIndicadores(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/getsintomas`).then((e)=>{setSintomas(e.data)})
         
     },[])
     const search=(e)=>{

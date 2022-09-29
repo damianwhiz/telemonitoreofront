@@ -7,9 +7,9 @@ export default function Dashboard(){
     const [doctores,setDoctores] = useState(false)
     const [enfermeras,setEnfermeras] = useState(false)
     useEffect(() =>{
-        axios.get("http://localhost:4000/all").then((response) =>{setPacientes(response.data)})
-        axios.get("http://localhost:4000/nurses").then((response) =>{setEnfermeras(response.data)})
-        axios.get("http://localhost:4000/doctors").then((response) =>{setDoctores(response.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/all`).then((response) =>{setPacientes(response.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/nurses`).then((response) =>{setEnfermeras(response.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/doctors`).then((response) =>{setDoctores(response.data)})
     },[])
     return <div className="dashboard">
         <div className="pacientes">

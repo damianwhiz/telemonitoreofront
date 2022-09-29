@@ -27,16 +27,16 @@ export default function Enfermero(){
     useEffect((e)=>{
 
       async function fetch(){
-        axios.get(`http://localhost:4000/getindicadores`).then(e=>{
+        axios.get(`${process.env.REACT_APP_URL_BACK}/getindicadores`).then(e=>{
         setIndicadores(e.data)
         
       })
-        axios.get(`http://localhost:4000/info-doctor/${id}`).then((e)=>{
+        axios.get(`${process.env.REACT_APP_URL_BACK}/info-doctor/${id}`).then((e)=>{
             setInfoDoctor(e.data.doctor[0]);
             
         })
 
-      axios.get(`http://localhost:4000/info-clients-total`).then(e=>{
+      axios.get(`${process.env.REACT_APP_URL_BACK}/info-clients-total`).then(e=>{
             setAllClients(e.data)
             let idDoctor=localStorage.getItem('id');
             let clientes=e.data.filter(e=>e.infoUser.id_doctor==idDoctor)

@@ -52,7 +52,7 @@ export default function Operador(){
         console.log(e.whatsapp)
     }*/
     useEffect(()=>{
-        axios.get("http://localhost:4000/info-operator").then(e=>{
+        axios.get(`${process.env.REACT_APP_URL_BACK}/info-operator`).then(e=>{
             setClients(e.data.clients)
             setRegisters(e.data.registers)
         })

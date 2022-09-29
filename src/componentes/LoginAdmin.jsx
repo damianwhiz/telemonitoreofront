@@ -28,7 +28,7 @@ export default function LoginAdmin(){
       }
       const sendLoginAdmin=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/login-admin",loginAdmin).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/login-admin`,loginAdmin).then(e=>{
           
               window.location.href="/admin"
             
@@ -56,7 +56,7 @@ export default function LoginAdmin(){
       }
       const sendLoginDoctor=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/login-doctor",loginDoctor).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/login-doctor`,loginDoctor).then(e=>{
           if(e.data.token){
             localStorage.setItem("token",e.data.token)
             localStorage.setItem("id",e.data.payload.id)
@@ -86,7 +86,7 @@ export default function LoginAdmin(){
       }
       const sendLoginEnfermero=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/login-nurse",loginEnfermero).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/login-nurse`,loginEnfermero).then(e=>{
           if(e.data.token){
             localStorage.setItem("token",e.data.token)
             localStorage.setItem("id",e.data.payload.id)
@@ -119,7 +119,7 @@ export default function LoginAdmin(){
       }
       const sendLoginOperador=async(e)=>{
         e.preventDefault()
-        await axios.post("http://localhost:4000/login-operator",loginOperador).then(e=>{
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/login-operator`,loginOperador).then(e=>{
           
           localStorage.setItem("id",e.data.id)
           window.location.href="/operador-dashboard"  

@@ -88,7 +88,7 @@ export default function Enfermero(){
         var num=localStorage.getItem("token")
         var token="Bearer "+num
         
-        axios.get(`http://localhost:4000/info-nurse/${id}`,{
+        axios.get(`${process.env.REACT_APP_URL_BACK}/info-nurse/${id}`,{
             headers: {
                 'authorization': token
               }
@@ -130,7 +130,7 @@ const pacienteGestion=(e)=>{
     var num=localStorage.getItem("token")
         var token="Bearer "+num
     let idCliente=selectedUser[0].id
-    axios.post(`http://localhost:4000/update-info/${idCliente}`,signosVitales,{
+    axios.post(`${process.env.REACT_APP_URL_BACK}/update-info/${idCliente}`,signosVitales,{
         headers:{'authorization': token}
     }).then(e=>{alert(e.data)})
 

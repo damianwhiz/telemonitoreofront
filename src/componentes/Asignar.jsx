@@ -8,8 +8,8 @@ export default function Asignar(){
     const [doctors,setDoctors] = useState([])
     const [nurses,setNurses] = useState([])
     useEffect((e)=>{
-        axios.get("http://localhost:4000/doctors").then((e)=>{setDoctors(e.data)})
-        axios.get("http://localhost:4000/nurses").then((e)=>{setNurses(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/doctors`).then((e)=>{setDoctors(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/nurses`).then((e)=>{setNurses(e.data)})
     })
     const [registroCliente,setRegistroCliente]= useState({
           name:location.state.name,
@@ -32,7 +32,7 @@ export default function Asignar(){
     const guardar=async(e)=>{
         e.preventDefault()
         console.log(registroCliente)
-        await axios.post("http://localhost:4000/register",registroCliente).then(e=>{console.log(e.data)})
+        await axios.post(`${process.env.REACT_APP_URL_BACK}/register`,registroCliente).then(e=>{console.log(e.data)})
          setRegistroCliente({
           name:"",
           lastname:"",

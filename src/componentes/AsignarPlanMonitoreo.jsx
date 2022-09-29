@@ -18,7 +18,7 @@ export default function Asignar({props,home}){
         e.preventDefault()
         let idCliente=props[0].infoUser.id
         console.log(idCliente)
-        axios.post(`http://localhost:4000/new-cuidador/${idCliente}`,formcuidador).then(e=>{alert(e.data)})
+        axios.post(`${process.env.REACT_APP_URL_BACK}/new-cuidador/${idCliente}`,formcuidador).then(e=>{alert(e.data)})
         setFormcuidador({
           name:"",
         lastname:"",
@@ -42,13 +42,13 @@ export default function Asignar({props,home}){
 
       const [cuidadores,setCuidadores]=useState([])
     useEffect(()=>{
-        axios.get("http://localhost:4000/getsintomas").then((e)=>{setSintomas(e.data)})
-        axios.get(`http://localhost:4000/info-paciente-cuidador/${props[0].infoUser.id}`).then(response => {setCuidadores(response.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/getsintomas`).then((e)=>{setSintomas(e.data)})
+        axios.get(`${process.env.REACT_APP_URL_BACK}/info-paciente-cuidador/${props[0].infoUser.id}`).then(response => {setCuidadores(response.data)})
     },[])
 
      const registrarUsuario=async(e)=>{
       e.preventDefault()
-      await axios.put(`http://localhost:4000/registraraplan`,dataRegistro).then(e=>{alert(e.data)})
+      await axios.put(`${process.env.REACT_APP_URL_BACK}/registraraplan`,dataRegistro).then(e=>{alert(e.data)})
      }
      const changePlan =(e)=>{
        let enfermedad=e.target.value
