@@ -38,6 +38,7 @@ export default function Enfermero(){
 
       axios.get(`${process.env.REACT_APP_URL_BACK}/info-clients-total`).then(e=>{
             setAllClients(e.data)
+            
             let idDoctor=localStorage.getItem('id');
             let clientes=e.data.filter(e=>e.infoUser.id_doctor==idDoctor)
             let myClientsRegistrados=clientes.filter(e=>e.infoUser.registrado==true && e.registros.length>0  && e.signosVitales.length>0)
@@ -205,6 +206,7 @@ const home=()=>{
                     <td><button className={styles.ver} onClick={()=>{setIsSelected("registros")
                     let idCliente=e.infoUser.id
                     let cliente=allClients.filter(e=>e.infoUser.id==idCliente)
+                    
                     setInfoUserCard(cliente)
                   }}>Ver usuario</button></td>
                     </tr>

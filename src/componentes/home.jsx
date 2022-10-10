@@ -18,23 +18,66 @@ const id=localStorage.getItem('id')
 const [data, setData] = useState([]);
 const [show,setShow] = useState("principal");
 const [grafico,setGrafico] =useState(false);
+const [graficoFrecuenciaCardiaca,setGraficoFrecuenciaCardiaca] = useState(false);
+const [graficoFrecuenciaRespiratoria,setGraficoFrecuenciaRespiratoria] = useState(false);
+const [graficoReaccionOrina,setGraficoReaccionOrina] = useState(false);
+const [graficoTemperatura,setGraficoTemperatura] =useState(false);
 useEffect(()=>{
     async function fetchData() {
-        await axios.get(`${process.env.REACT_APP_URL_BACK}/info-clients/${whatsapp}`).then(response => {
-            setData(response.data);
-            console.log(response.data[1])
-            console.log(process.env.REACT_APP_URL_BACK)
-            let fechas=response.data[1].map(e=>{return e.date})
-            let estados=response.data[1].map(e=>{return e.first_question})
+        await axios.get(`${process.env.REACT_APP_URL_BACK}/info-clients/${id}`).then(response => {
+            setData(response.data)
+            
+            let fechasGeneral=response.data[1].map(e=>{return e.date})
+            let estadosGeneral=response.data[1].map(e=>{return e.estado_general})
+           
+            let frecuenciaCardiaca=response.data[1].map(e=>{return e.frecuencia_cardiaca})
+            let frecuenciaRespiratoria=response.data[1].map(e=>{return e.frecuencia_respiratoria})
+            let reaccionOrina=response.data[1].map(e=>{return e.reaccion_orina})
+            let temperatura=response.data[1].map(e=>{return e.temperatura})
             setGrafico({
-            labels:fechas,
+            labels:fechasGeneral,
             datasets:[{
             label:"Estado general del paciente",
-            data:estados,
+            data:estadosGeneral,
             backgroundColor:["pink","blue","green","yellow"],
             borderColor:["#c7204f"]
-       }]
-   })
+            }]})
+
+            setGraficoFrecuenciaCardiaca({
+              labels:fechasGeneral,
+              datasets:[{
+              label:"Frecuencia cardíaca del paciente",
+              data:frecuenciaCardiaca,
+              backgroundColor:["pink","blue","green","yellow"],
+              borderColor:["#c7204f"]
+              }]})
+
+              setGraficoFrecuenciaRespiratoria({
+                labels:fechasGeneral,
+                datasets:[{
+                label:"Frecuencia respiratoria del paciente",
+                data:frecuenciaRespiratoria,
+                backgroundColor:["pink","blue","green","yellow"],
+                borderColor:["#c7204f"]
+                }]})
+
+                setGraficoReaccionOrina({
+                  labels:fechasGeneral,
+                  datasets:[{
+                  label:"Reaccion de la orina del paciente",
+                  data:reaccionOrina,
+                  backgroundColor:["pink","blue","green","yellow"],
+                  borderColor:["#c7204f"]
+                  }]})
+                  
+                  setGraficoTemperatura({
+                    labels:fechasGeneral,
+                    datasets:[{
+                    label:"Temperatura del paciente",
+                    data:temperatura,
+                    backgroundColor:["pink","blue","green","yellow"],
+                    borderColor:["#c7204f"]
+                    }]})
         
         })
 
@@ -59,9 +102,9 @@ useEffect(()=>{
                 <div className={styles.paneldown}>
                 <div className={styles.sintomas}>
                     <div>
-                    <p>Aqui abajo usted podra visualizar una lista de sus síntomas:</p>
                     <p>¿Tienes dudas? Mandanos un mensaje al siguiente <a style={{color:"#c7204f"}}>link</a></p>
                     {grafico!==false?<Line data={grafico}></Line>:<p>Parece que aun no tienes registros</p>}
+                    <button onClick={()=>{setShow("mis-indicadores")}} className={styles.verregistros}>Ver todos mis indicadores</button>
                     </div>
                 </div>
                 <div className={styles.actualizaciones}>
@@ -170,6 +213,18 @@ useEffect(()=>{
                 </div>
             }
             
+            {show=="mis-indicadores" && <div>
+
+            <button className={styles.verregistros} onClick={()=>{setShow("principal")}}>Volver al inicio</button>
+            <h4>Registros del paciente al dia de la fecha</h4>
+            <div className={styles.contenedorGrafica}>
+              
+            <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoFrecuenciaCardiaca}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+            <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoFrecuenciaRespiratoria}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+            <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoReaccionOrina}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+            <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoTemperatura}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+            </div>
+              </div>}
     </div>
 }
 

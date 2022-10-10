@@ -1,13 +1,26 @@
 import React from "react";
 import {Line} from "react-chartjs-2"
 import { Chart as ChartJS } from "chart.js/auto";
+import axios from "axios"
 import {useState,useEffect} from "react"
 import styles from "./CardInfoUser.module.css"
 export default function CardInfoUser({info}){
     const [grafico,setGrafico] =useState(false)
+    const [show,setShow] =useState("perfil-paciente")
+console.log(info)
+    //Graficas
+const [graficoFrecuenciaCardiaca,setGraficoFrecuenciaCardiaca] = useState(false);
+const [graficoFrecuenciaRespiratoria,setGraficoFrecuenciaRespiratoria] = useState(false);
+const [graficoReaccionOrina,setGraficoReaccionOrina] = useState(false);
+const [graficoTemperatura,setGraficoTemperatura] =useState(false);
 useEffect(()=>{
-    let fechas=info[0].registros.map(e=>{return e.date})
-            let estados=info[0].registros.map(e=>{return e.first_question})
+    async function fetchData() {
+    let fechas=info[0].signosVitales.map(e=>{return e.date})
+            let estados=info[0].signosVitales.map(e=>{return e.estado_general})
+            let frecuenciaCardiaca=info[0].signosVitales.map(e=>{return e.frecuencia_cardiaca})
+            let frecuenciaRespiratoria=info[0].signosVitales.map(e=>{return e.frecuencia_respiratoria})
+            let reaccionOrina=info[0].signosVitales.map(e=>{return e.reaccion_orina})
+            let temperatura=info[0].signosVitales.map(e=>{return e.temperatura})
             setGrafico({
             labels:fechas,
             datasets:[{
@@ -16,8 +29,45 @@ useEffect(()=>{
            backgroundColor:["pink","blue","green","yellow"],
            borderColor:["#c7204f"]
        }]
-   })
+        })
 
+        setGraficoFrecuenciaCardiaca({
+            labels:fechas,
+            datasets:[{
+            label:"Frecuencia cardíaca del paciente",
+            data:frecuenciaCardiaca,
+            backgroundColor:["pink","blue","green","yellow"],
+            borderColor:["#c7204f"]
+            }]})
+
+            setGraficoFrecuenciaRespiratoria({
+              labels:fechas,
+              datasets:[{
+              label:"Frecuencia respiratoria del paciente",
+              data:frecuenciaRespiratoria,
+              backgroundColor:["pink","blue","green","yellow"],
+              borderColor:["#c7204f"]
+              }]})
+
+              setGraficoReaccionOrina({
+                labels:fechas,
+                datasets:[{
+                label:"Reaccion de la orina del paciente",
+                data:reaccionOrina,
+                backgroundColor:["pink","blue","green","yellow"],
+                borderColor:["#c7204f"]
+                }]})
+                
+                setGraficoTemperatura({
+                  labels:fechas,
+                  datasets:[{
+                  label:"Temperatura del paciente",
+                  data:temperatura,
+                  backgroundColor:["pink","blue","green","yellow"],
+                  borderColor:["#c7204f"]
+                  }]})
+    }
+    fetchData()
 },[])
     
 
@@ -26,11 +76,12 @@ useEffect(()=>{
         Apellido: {info[0].infoUser.lastname}
         DNI: {info[0].infoUser.dni}
         <div className={styles.panelinfoclient}>
-
+        {show=="perfil-paciente" && <>
         <div className={styles.CardInfoUser}>
             <div>
             <h4>Estado general del paciente</h4>
             {grafico!==false?<Line data={grafico}></Line>:<p>Parece que aun no tienes registros</p>}
+            <button className={styles.verregistros} onClick={()=>{setShow("graficos-indicadores")}}>Ver todos los indicadores</button>
             </div>
         </div>
         <div className={styles.SignosVitales}>
@@ -49,6 +100,18 @@ useEffect(()=>{
                 
             </ul>
         </div>
+        </>
+        }
+        
+        {show=="graficos-indicadores" && <div className={styles.graficosIndicadores}>
+        <button className={styles.verregistros} onClick={()=>{setShow("perfil-paciente")}}>Volver a usuario</button>
+        <div className={styles.contenedorGrafica}>
+        <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoFrecuenciaCardiaca}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+        <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoFrecuenciaRespiratoria}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+        <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoReaccionOrina}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+        <div className={styles.grafica}>{graficoFrecuenciaCardiaca!==false?<Line data={graficoTemperatura}></Line>:<p>Parece que aun no tienes registros</p>}</div>
+        </div>
+        </div>}
         </div>
     </div>
 }

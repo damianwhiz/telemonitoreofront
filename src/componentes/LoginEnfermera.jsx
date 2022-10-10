@@ -158,6 +158,7 @@ export default function LoginEnfermera(){
         e.preventDefault()
         await axios.post(`${process.env.REACT_APP_URL_BACK}/register-nurse`,registroEnfermero).then(e=>{
           swal("Guardado!", "Usuario creado exitosamente!", "success");
+          console.log(e.data)
         })
         setRegistroEnfermero({
           name:"",

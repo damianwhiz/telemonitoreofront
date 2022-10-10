@@ -11,3 +11,11 @@
     display: flex;
     flex-direction: column;
 }
+.grafica{
+    width: 50%
+}
+.contenedorGrafica{
+    display: flex;
+    width: 90%;
+    flex-wrap: wrap;
+}

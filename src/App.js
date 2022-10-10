@@ -10,6 +10,7 @@ import Enfermero from "./componentes/Enfermero.jsx"
 import Operador from "./componentes/Operador.jsx";
 import UserNurse  from "./componentes/UserNurse.jsx";
 import Doctor from "./componentes/Doctor.jsx";
+import AddClientExcel from "./componentes/AddClilentExcel";
 import { useState } from "react";
 import {Context} from "./Contex"
 function App() {
@@ -29,7 +30,7 @@ const [mensaje,setMensaje] =useState("")
       <Route path='/doctor-dashboard' element={<Doctor/>}/>
       <Route path='/operador-dashboard' element={<Operador/>}/>
       <Route path='/user-nurse' element={<UserNurse/>}/>
-      
+      <Route path='/add-clients' element={<AddClientExcel/>}/>
     </Routes>
     </Context.Provider>
     </div>

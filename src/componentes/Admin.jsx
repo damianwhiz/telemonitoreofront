@@ -11,7 +11,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { AiFillEye } from 'react-icons/ai';
 import { AiTwotoneEdit } from 'react-icons/ai';
-
+import AddClilentExcel from "./AddClilentExcel"
 export default function Admin(){
 
     //INDICADORES ADD
@@ -178,7 +178,7 @@ export default function Admin(){
         <div className={styles.nav}>
         <ul>
             
-            
+            <li><Link to="/add-clients">Registrar indicadores de paciente</Link></li>
             <li className={styles.cerrarsesion} onClick={()=>{window.location.href="/"}}>Salir</li>
             </ul>
         </div>

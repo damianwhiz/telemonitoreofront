@@ -20,6 +20,7 @@ export default function Login(){
   const sendLogin=async(e)=>{
     e.preventDefault()
     await axios.post(`${process.env.REACT_APP_URL_BACK}/login`,login).then(e=>{
+      console.log(e.data)
       if(e.data.token){
         localStorage.setItem("token",e.data.token)
       localStorage.setItem("id",e.data.payload.id)
